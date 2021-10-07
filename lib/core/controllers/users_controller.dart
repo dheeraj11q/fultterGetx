@@ -1,18 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:get/get.dart';
-import 'package:dio/dio.dart';
-import 'package:getxf/core/services/api/dio_apis/dioGetApi.dart';
-import 'package:getxf/core/services/models/userListModel.dart';
+import 'package:getxf/core/models/singleUserModel.dart';
+import 'package:getxf/core/models/userModel.dart';
+import 'package:getxf/core/services/api/dio_apis/dio_http.dart';
 import 'package:getxf/core/utils/data.dart';
-import 'package:http/http.dart' as http;
 
 class UserController extends GetxController {
+  dynamic argumentData = Get.arguments;
   int count = 10;
-  List<UserListModel>? userList;
+  // List<UserListModel>? userList;
   bool loading = false;
+  HttpService? http;
+  bool isLoading = false;
+  UserModel? userListM;
+  SingleUserModel? singleUser;
 
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult>? _connectionSubscription;
@@ -20,7 +22,9 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-    getHttp();
+    http = HttpService();
+    // print("arsgs2  ");
+    // getHttp();
     super.onInit();
 
     _connectionSubscription =
@@ -30,58 +34,60 @@ class UserController extends GetxController {
 
       if (_connectionStatus == "ConnectivityResult.none") {
         UserData.internet = false;
+
         Get.defaultDialog(
-          // barrierDismissible: false,
-          title: "Internet",
-          radius: 10,
-          // onWillPop: () async {
-          //   return false;
-          // }
-        );
-        // toastshow(text: "Internet connected");
+            barrierDismissible: false,
+            title: "Internet",
+            radius: 10,
+            onWillPop: () async {
+              return false;
+            });
       } else {
         UserData.internet = true;
         Get.back();
       }
     });
+
+    getUsers();
   }
 
-  void getHttp() async {
-    print("run....");
-
-    String url = 'https://jsonplaceholder.typicode.com';
-    BaseOptions opts = BaseOptions(
-      baseUrl: url,
-      responseType: ResponseType.json,
-      connectTimeout: 100000,
-      receiveTimeout: 30000,
-    );
-
-    Dio dio = Dio(opts);
-
+  // pagination func
+  Future getUsers() async {
+    print("Get Users..........");
     try {
-      dio.get("/photos").then((value) {
-        print(value.data);
+      loading = true;
+      update();
+      await http?.getRequest(endPoint: "/api/users").then((value) {
+        loading = false;
 
-        var data = json.encode(value.data);
-        print(data);
+        userListM = UserModel.fromJson(value.data);
       });
     } catch (e) {
+      loading = false;
       print(e);
     }
-    // try {
-    //   loading = true;
 
-    //   var response = await http.get(Uri.parse(
-    //       'https://jsonplaceholder.typicode.com/photos')); //Dio().get('https://jsonplaceholder.typicode.com/photos');
-    //   // print(response);
+    update();
+  }
 
-    //   userList = userListModelFromJson(response.body);
-    //   loading = false;
+  Future getSingleUsers() async {
+    print("func start  ..........");
+    try {
+      loading = true;
+      update();
+      await http
+          ?.getRequest(endPoint: "/api/users/${Get.arguments}")
+          .then((value) {
+        print(value);
+        loading = false;
 
-    //   update();
-    // } catch (e) {
-    //   print("erro to loading $e");
-    // }
+        singleUser = SingleUserModel.fromJson(value.data);
+      });
+    } catch (e) {
+      loading = false;
+      print(e);
+    }
+
+    update();
   }
 }

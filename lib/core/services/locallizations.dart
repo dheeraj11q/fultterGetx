@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getxf/core/utils/lang/ar_db.dart';
-import 'package:getxf/core/utils/lang/en_us.dart';
-import 'package:getxf/core/utils/lang/ja_jp.dart';
-import 'package:getxf/core/utils/lang/pn_in.dart';
-import 'package:getxf/core/utils/lang/tr_tr.dart';
+import 'package:getxf/core/utils/strings/lang/ar_db.dart';
+import 'package:getxf/core/utils/strings/lang/en_us.dart';
+import 'package:getxf/core/utils/strings/lang/ja_jp.dart';
+import 'package:getxf/core/utils/strings/lang/pn_in.dart';
+import 'package:getxf/core/utils/strings/lang/tr_tr.dart';
 
 class LocalizationService extends Translations {
   // Default locale
