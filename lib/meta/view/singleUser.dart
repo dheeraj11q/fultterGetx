@@ -36,9 +36,9 @@ class SingleUser extends StatelessWidget {
             GetBuilder<UserController>(
                 // init: UserController(),
                 initState: (v) {
-                  Future.delayed(Duration(milliseconds: 100), () {
-                    userController.getSingleUsers();
-                  });
+                  // Future.delayed(Duration(milliseconds: 100), () {
+                  //   userController.getSingleUsers();
+                  // });
                 },
                 builder: (con) => con.loading
                     ? Center(child: SpinKitCircle(color: Get.theme.accentColor))
@@ -46,11 +46,13 @@ class SingleUser extends StatelessWidget {
                         child: userController.singleUser != null
                             ? Column(
                                 children: [
-                                  ImageShow.circulalAvtarNetwork(
-                                      width: 50,
-                                      height: 50,
-                                      url:
-                                          "${userController.singleUser?.data?.avatar}"),
+                                  Hero(
+                                      tag: "12345",
+                                      child: ImageShow.circulalAvtarNetwork(
+                                          width: 50,
+                                          height: 50,
+                                          url:
+                                              "${userController.singleUser?.data?.avatar}")),
                                   SizedBox(
                                     width: 10,
                                   ),

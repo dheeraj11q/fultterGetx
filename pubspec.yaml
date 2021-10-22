@@ -35,6 +35,21 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   shimmer: ^2.0.0
   flutter_spinkit: ^5.1.0
+  get_storage: ^2.0.3
+  # for animations
+  simple_animations:
+  flutter_staggered_animations:
+  # flutter_bounceable:
+  # flutter_staggered_animations: ^1.0.0
+  # flutter_native_splash: ^1.2.2
+
+    # Online Storage For Files
+
+  firebase_core: ^1.7.0
+
+  # Add Authentication such as Google SignIn, Facebook SignIn, Apple SignIn, Phone Auth etc.
+  firebase_auth: ^1.1.1
+
 
  
  
@@ -42,6 +57,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_native_splash:
+    # color: "#fffff"
+    # image: "assets/placeHolderImages/postPlaceHolderImage.jpg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

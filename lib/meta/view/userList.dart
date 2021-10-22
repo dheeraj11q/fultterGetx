@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:getxf/app/pages.dart';
 import 'package:getxf/core/components/image_with_placeholder.dart';
 import 'package:getxf/core/controllers/users_controller.dart';
@@ -9,17 +10,21 @@ import 'package:getxf/meta/view/singleUser.dart';
 class UserList extends StatelessWidget {
   final c = Get.put(UserController());
 
+  GetStorage box = GetStorage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.menu),
+        title: Text("appbar"),
+      ),
       backgroundColor: Colors.black,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Get.to(PaginationContainer());
-          // c.getHttp();
-          // Get.toNamed(Pages.languageChange);
+          Get.toNamed(Pages.animationScreen);
 
-          c.getUsers();
+          // Get.to(() => ListAnimations());
         },
         child: Icon(Icons.add),
       ),
@@ -105,7 +110,7 @@ class UserList extends StatelessWidget {
                                         "${c.userListM?.data![index].id}");
                               },
                               child: Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: EdgeInsets.all(16),
                                 child: Row(
                                   // crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
